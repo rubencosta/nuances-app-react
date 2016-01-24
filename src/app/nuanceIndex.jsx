@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
-import Relay, {createContainer, Route, Store} from 'react-relay'
-import {Link} from 'react-router'
+import React, { Component } from 'react'
+import Relay, { createContainer, Route, Store } from 'react-relay'
+import { Link } from 'react-router'
 
-const NuanceIndex = ({allNuances}) => {
+const NuanceIndex = ({nuanceConnection}) => {
   return (
     <section>
       <ul>
-        {allNuances.nuanceConnection.edges.map((edge) => (
+        {nuanceConnection.edges.map((edge) => (
           <li key={edge.node.id}>
             <article>
               <Link to={`/nuances/${edge.node.id}`}>
@@ -24,15 +24,13 @@ const NuanceIndex = ({allNuances}) => {
 
 export default createContainer(NuanceIndex, {
   fragments: {
-    allNuances: () => Relay.QL`
-        fragment on AllNuances{
-            nuanceConnection(first: 100){
-                edges{
-                    node {
-                        id
-                        word
-                        description
-                    }
+    nuanceConnection: () => Relay.QL`
+        fragment on NuanceConnection{
+            edges{
+                node {
+                    id
+                    word
+                    description
                 }
             }
         }

@@ -3,11 +3,18 @@ import Relay, {RootContainer, createContainer} from 'react-relay'
 import {RelayRouter} from 'react-router-relay'
 import {Route, Link, hashHistory} from 'react-router'
 
-import NuanceIndex from './nuanceIndex.jsx'
+import AllNuances from './allNuances.jsx'
+import User from './user.jsx'
 
 const petitionIndexQueries = {
   allNuances: () => Relay.QL`query {
       allNuances
+  }`
+}
+
+const userQueries = {
+  user: () => Relay.QL`query {
+      user(username: $user)
   }`
 }
 
@@ -16,6 +23,7 @@ const Dashboard = ({children}) => {
     <div>
       <h1>Dashboard</h1>
       <Link to="/nuances">nuances</Link>
+      <Link to="/user/test">test</Link>
       {children}
     </div>
   )
@@ -35,8 +43,13 @@ export const App = () => {
       >
         <Route
           path="nuances"
-          component={NuanceIndex}
+          component={AllNuances}
           queries={petitionIndexQueries}
+        />
+        <Route
+          path="/user/:user"
+          component={User}
+          queries={userQueries}
         />
       </Route>
     </RelayRouter>
