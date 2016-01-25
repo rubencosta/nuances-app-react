@@ -29,6 +29,9 @@ module.exports = {
       title: 'relay prototype',
       template: './src/index.tpl.html',
       inject: true
-    })
+    }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
   ]
 }

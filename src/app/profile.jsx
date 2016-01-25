@@ -3,21 +3,25 @@ import Relay, { createContainer, Route, Store } from 'react-relay'
 
 import NuanceIndex from './nuanceIndex.jsx'
 import NuanceForm from './nuanceForm.jsx'
+import LoginForm from './loginForm.jsx'
 
-const User = ({user, allWords}) => {
-  return (
+const Profile = ({currentUser, allWords}) => {
+  return currentUser !== null ? (
     <div>
-      <h1>{user.auth.local.username}</h1>
-      <NuanceIndex nuanceConnection={user.nuanceConnection}/>
-      <NuanceForm user={user}
+      <button onClick={() => window.localStorage.removeItem('ncsjwt')}>Sign out</button>
+      <h1>{currentUser.auth.local.username}</h1>
+      <NuanceIndex nuanceConnection={currentUser.nuanceConnection}/>
+      <NuanceForm user={currentUser}
                   allWords={allWords}/>
     </div>
+  ) : (
+    <LoginForm/>
   )
 }
 
-export default createContainer(User, {
+export default createContainer(Profile, {
   fragments: {
-    user: () => Relay.QL`
+    currentUser: () => Relay.QL`
         fragment on User{
             ${NuanceForm.getFragment('user')}
             auth{
@@ -31,9 +35,9 @@ export default createContainer(User, {
         }
     `,
     allWords: () => Relay.QL`
-      fragment on AllWords{
-          ${NuanceForm.getFragment('allWords')}
-      }
+        fragment on AllWords{
+            ${NuanceForm.getFragment('allWords')}
+        }
     `
   }
 })
