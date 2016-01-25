@@ -9,11 +9,9 @@ const NuanceIndex = ({nuanceConnection}) => {
         {nuanceConnection.edges.map((edge) => (
           <li key={edge.node.id}>
             <article>
-              <Link to={`/nuances/${edge.node.id}`}>
-                {edge.node.id}
-                <h1>{edge.node.word}</h1>
-                <p>{edge.node.description}</p>
-              </Link>
+              <h1><Link to={`/nuances/${edge.node.id}`}>{edge.node.word.alias}</Link></h1>
+              <p>{edge.node.description}</p>
+              <p>by: <strong>{edge.node.creator.auth.local.username}</strong></p>
             </article>
           </li>
         ))}
@@ -29,7 +27,16 @@ export default createContainer(NuanceIndex, {
             edges{
                 node {
                     id
-                    word
+                    creator{
+                        auth{
+                            local{
+                                username
+                            }
+                        }
+                    }
+                    word{
+                        alias
+                    }
                     description
                 }
             }
