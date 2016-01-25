@@ -5,13 +5,10 @@ import CreateNuanceMutation from './mutations/createNuance'
 class NuanceForm extends Component {
   onSubmit(event) {
     event.preventDefault()
-    const {word: {value: word}, description: {value: description}} = event.target.elements
-    console.log(word)
-    console.log(this.props.user)
-    console.log(description)
+    const {word: {value: wordId}, description: {value: description}} = event.target.elements
     Store.applyUpdate(new CreateNuanceMutation({
       user: this.props.user,
-      word,
+      word: this.props.allWords.wordConnection.edges.filter((edge) => edge.node.id === wordId).map((edge) => edge.node).shift(),
       description
     }), {onFailure: ::this.onFailure, onSuccess: ::this.onSuccess}).commit()
   }
