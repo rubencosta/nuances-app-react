@@ -30,6 +30,12 @@ export default class CreateNuanceMutation extends Mutation {
     }
   }
 
+  getFiles() {
+    return {
+      image: this.props.image,
+    }
+  }
+
   getFatQuery(){
     return Relay.QL`
         fragment on CreateNuancePayload{

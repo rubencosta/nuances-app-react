@@ -5,11 +5,12 @@ import CreateNuanceMutation from './mutations/createNuance'
 class NuanceForm extends Component {
   onSubmit(event) {
     event.preventDefault()
-    const {word: {value: wordId}, description: {value: description}} = event.target.elements
+    const {word: {value: wordId}, description: {value: description}, image: {files: [image, ...rest]}} = event.target.elements
     Store.applyUpdate(new CreateNuanceMutation({
       user: this.props.user,
       word: this.props.allWords.wordConnection.edges.filter((edge) => edge.node.id === wordId).map((edge) => edge.node).shift(),
-      description
+      description,
+      image,
     }), {onFailure: ::this.onFailure, onSuccess: ::this.onSuccess}).commit()
   }
 
@@ -46,6 +47,10 @@ class NuanceForm extends Component {
             type="text"
             name="description"
             required/>
+          <label htmlFor="image">image</label>
+          <input name="image"
+                 type="file"
+                 required/>
           <button type="submit">Create</button>
           <button onClick={::this.reset}>reset</button>
         </form>

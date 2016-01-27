@@ -12,6 +12,7 @@ const NuanceIndex = ({nuanceConnection}) => {
               <h1><Link to={`/nuances/${edge.node.id}`}>{edge.node.word.alias}</Link></h1>
               <p>{edge.node.description}</p>
               <p>by: <strong>{edge.node.creator.auth.local.username}</strong></p>
+              <img src="{edge.node.image}" width="400" height="400"/>
             </article>
           </li>
         ))}
@@ -38,6 +39,7 @@ export default createContainer(NuanceIndex, {
                         alias
                     }
                     description
+                    image
                 }
             }
         }

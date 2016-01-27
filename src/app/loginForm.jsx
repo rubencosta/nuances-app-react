@@ -6,7 +6,7 @@ class LoginForm extends Component {
   onSubmit(event) {
     event.preventDefault()
     const {username: {value: username}, password: {value: password}} = event.target.elements
-    fetch('http://localhost:8000/authenticate', {
+    fetch('http://192.168.1.69:8000/authenticate', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
